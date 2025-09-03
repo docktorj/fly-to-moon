@@ -7,7 +7,7 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(circle at bottom, #001f3f, #000000);
+      background: radial-gradient(circle at bottom, #000010, #000000);
       color: white;
       text-align: center;
       overflow-x: hidden;
@@ -15,7 +15,8 @@
 
     h1 {
       margin-top: 30px;
-      font-size: 2em;
+      font-size: 2.5em;
+      text-shadow: 0 0 10px #00f;
     }
 
     #status {
@@ -25,30 +26,33 @@
 
     #sky {
       position: relative;
-      height: 150px;
+      height: 180px;
       margin: 30px auto;
-      background: linear-gradient(to right, #000011, #001f3f);
+      background: url('https://raw.githubusercontent.com/microsoft/copilot-assets/main/stars-bg.png') repeat;
+      background-size: cover;
       border: 2px solid #0074D9;
       border-radius: 12px;
       overflow: hidden;
       width: 90%;
-      max-width: 800px;
+      max-width: 900px;
     }
 
     #astronaut {
       position: absolute;
-      top: 50px;
+      top: 60px;
       left: 0%;
       font-size: 2.5em;
       transition: left 0.3s ease-in-out;
+      text-shadow: 0 0 5px #fff;
     }
 
     #moon {
       position: absolute;
-      top: 20px;
+      top: 30px;
       right: 10px;
       font-size: 3em;
       animation: pulse 2s infinite;
+      text-shadow: 0 0 15px #ffff99;
     }
 
     @keyframes pulse {
@@ -74,11 +78,16 @@
     button {
       font-size: 1.1em;
       margin: 10px;
-      padding: 10px 25px;
+      padding: 12px 30px;
       cursor: pointer;
       border: none;
       border-radius: 8px;
-      transition: background 0.3s;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 0 10px #000;
+    }
+
+    button:hover {
+      transform: scale(1.05);
     }
 
     #forward { background-color: #2ECC40; color: white; }
@@ -87,18 +96,19 @@
 
     #progressBar {
       width: 90%;
-      max-width: 800px;
+      max-width: 900px;
       height: 20px;
-      background-color: #333;
+      background-color: #222;
       border-radius: 10px;
       margin: 20px auto;
       overflow: hidden;
+      box-shadow: inset 0 0 5px #000;
     }
 
     #progressFill {
       height: 100%;
       width: 0%;
-      background-color: #2ECC40;
+      background: linear-gradient(to right, #2ECC40, #0074D9);
       transition: width 0.3s ease-in-out;
     }
   </style>
