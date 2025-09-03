@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fly to the Moon</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: linear-gradient(to top, #001f3f, #0074D9);
+      color: white;
+      padding-top: 50px;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    #status {
+      font-size: 1.5em;
+      margin: 20px;
+    }
+    button {
+      font-size: 1.2em;
+      margin: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+    }
+    #forward { background-color: #2ECC40; }
+    #backward { background-color: #FF4136; }
+    #restart { background-color: #FFDC00; color: black; }
+  </style>
+</head>
+<body>
+  <h1>🚀 Fly to the Moon</h1>
+  <div id="status">Distance from Earth: 0 / 100</div>
+  <button id="forward">Fly Forward</button>
+  <button id="backward">Fly Backward</button>
+  <button id="restart">Restart</button>
+
+  <script>
+    let distance = 0;
+    const maxDistance = 100;
+    const status = document.getElementById("status");
+
+    function updateStatus() {
+      if (distance >= maxDistance) {
+        status.textContent = "🌕 You've reached the Moon!";
+      } else if (distance <= 0) {
+        status.textContent = "🌍 You're on Earth.";
+      } else {
+        status.textContent = `Distance from Earth: ${distance} / ${maxDistance}`;
+      }
+    }
+
+    document.getElementById("forward").onclick = () => {
+      if (distance < maxDistance) {
+        distance++;
+        updateStatus();
+      }
+    };
+
+    document.getElementById("backward").onclick = () => {
+      if (distance > 0) {
+        distance--;
+        updateStatus();
+      }
+    };
+
+    document.getElementById("restart").onclick = () => {
+      distance = 0;
+      updateStatus();
+    };
+
+    updateStatus();
+  </script>
+</body>
+</html>
