@@ -1,39 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Fly to the Moon</title>
   <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      background: linear-gradient(to top, #001f3f, #0074D9);
-      color: white;
-      padding-top: 50px;
-    }
-    h1 {
-      margin-bottom: 10px;
-    }
-    #status {
-      font-size: 1.5em;
-      margin: 20px;
-    }
-    button {
-      font-size: 1.2em;
-      margin: 10px;
-      padding: 10px 20px;
-      cursor: pointer;
-      border: none;
-      border-radius: 8px;
-    }
-    #forward { background-color: #2ECC40; }
-    #backward { background-color: #FF4136; }
-    #restart { background-color: #FFDC00; color: black; }
-  </style>
-</head>
+  body {
+    font-family: sans-serif;
+    text-align: center;
+    background: linear-gradient(to top, #001f3f, #0074D9);
+    color: white;
+    padding-top: 50px;
+  }
+
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  #status {
+    font-size: 1.5em;
+    margin: 20px;
+  }
+
+  button {
+    font-size: 1.2em;
+    margin: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+  }
+
+  #forward { background-color: #2ECC40; }
+  #backward { background-color: #FF4136; }
+  #restart { background-color: #FFDC00; color: black; }
+
+  #sky {
+    position: relative;
+    height: 100px;
+    margin: 30px auto;
+    background: linear-gradient(to right, #001f3f, #0074D9);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  #astronaut {
+    position: absolute;
+    top: 30px;
+    left: 0%;
+    font-size: 2em;
+    transition: left 0.3s ease;
+  }
+
+  .bounce {
+    animation: bounce 0.6s;
+  }
+
+  @keyframes bounce {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+  }
+</style>
+
+
 <body>
   <h1>🚀 Fly to the Moon</h1>
   <div id="status">Distance from Earth: 0 / 100</div>
+  <div id="sky">
+    <div id="astronaut">🧑‍🚀</div>
+  </div>
   <button id="forward">Fly Forward</button>
   <button id="backward">Fly Backward</button>
   <button id="restart">Restart</button>
@@ -42,15 +73,22 @@
     let distance = 0;
     const maxDistance = 100;
     const status = document.getElementById("status");
+    const astronaut = document.getElementById("astronaut");
 
     function updateStatus() {
       if (distance >= maxDistance) {
         status.textContent = "🌕 You've reached the Moon!";
+        astronaut.classList.add("bounce");
       } else if (distance <= 0) {
         status.textContent = "🌍 You're on Earth.";
+        astronaut.classList.add("bounce");
       } else {
         status.textContent = `Distance from Earth: ${distance} / ${maxDistance}`;
+        astronaut.classList.remove("bounce");
       }
+
+      const percent = (distance / maxDistance) * 100;
+      astronaut.style.left = `${percent}%`;
     }
 
     document.getElementById("forward").onclick = () => {
@@ -75,4 +113,3 @@
     updateStatus();
   </script>
 </body>
-</html>
