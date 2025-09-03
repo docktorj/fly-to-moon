@@ -1,84 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <title>Fly to the Moon</title>
   <style>
-  body {
-    font-family: sans-serif;
-    text-align: center;
-    background: linear-gradient(to top, #001f3f, #0074D9);
-    color: white;
-    padding-top: 50px;
-  }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at bottom, #001f3f, #000000);
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+    }
 
-  h1 {
-    margin-bottom: 10px;
-  }
+    h1 {
+      margin-top: 30px;
+      font-size: 2em;
+    }
 
-  #status {
-    font-size: 1.5em;
-    margin: 20px;
-  }
+    #status {
+      font-size: 1.3em;
+      margin: 20px;
+    }
 
-  button {
-    font-size: 1.2em;
-    margin: 10px;
-    padding: 10px 20px;
-    cursor: pointer;
-    border: none;
-    border-radius: 8px;
-  }
+    #sky {
+      position: relative;
+      height: 150px;
+      margin: 30px auto;
+      background: linear-gradient(to right, #000011, #001f3f);
+      border: 2px solid #0074D9;
+      border-radius: 12px;
+      overflow: hidden;
+      width: 90%;
+      max-width: 800px;
+    }
 
-  #forward { background-color: #2ECC40; }
-  #backward { background-color: #FF4136; }
-  #restart { background-color: #FFDC00; color: black; }
+    #astronaut {
+      position: absolute;
+      top: 50px;
+      left: 0%;
+      font-size: 2.5em;
+      transition: left 0.3s ease-in-out;
+    }
 
-  #sky {
-    position: relative;
-    height: 100px;
-    margin: 30px auto;
-    background: linear-gradient(to right, #001f3f, #0074D9);
-    border-radius: 10px;
-    overflow: hidden;
-  }
+    #moon {
+      position: absolute;
+      top: 20px;
+      right: 10px;
+      font-size: 3em;
+      animation: pulse 2s infinite;
+    }
 
-  #astronaut {
-    position: absolute;
-    top: 30px;
-    left: 0%;
-    font-size: 2em;
-    transition: left 0.3s ease;
-  }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.8; }
+    }
 
-  .bounce {
-    animation: bounce 0.6s;
-  }
+    .bounce {
+      animation: bounce 0.6s;
+    }
 
-  @keyframes bounce {
-    0%   { transform: translateY(0); }
-    50%  { transform: translateY(-10px); }
-    100% { transform: translateY(0); }
-  }
-</style>
+    @keyframes bounce {
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
 
+    .buttons {
+      margin-top: 20px;
+    }
 
+    button {
+      font-size: 1.1em;
+      margin: 10px;
+      padding: 10px 25px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    #forward { background-color: #2ECC40; color: white; }
+    #backward { background-color: #FF4136; color: white; }
+    #restart { background-color: #FFDC00; color: black; }
+
+    #progressBar {
+      width: 90%;
+      max-width: 800px;
+      height: 20px;
+      background-color: #333;
+      border-radius: 10px;
+      margin: 20px auto;
+      overflow: hidden;
+    }
+
+    #progressFill {
+      height: 100%;
+      width: 0%;
+      background-color: #2ECC40;
+      transition: width 0.3s ease-in-out;
+    }
+  </style>
+</head>
 <body>
   <h1>🚀 Fly to the Moon</h1>
-  <div id="status">Distance from Earth: 0 / 100</div>
+  <div id="status">Distance from Earth: 0 / 1000</div>
+  <div id="progressBar"><div id="progressFill"></div></div>
   <div id="sky">
     <div id="astronaut">🧑‍🚀</div>
+    <div id="moon">🌕</div>
   </div>
-  <button id="forward">Fly Forward</button>
-  <button id="backward">Fly Backward</button>
-  <button id="restart">Restart</button>
+  <div class="buttons">
+    <button id="forward">Fly Forward</button>
+    <button id="backward">Fly Backward</button>
+    <button id="restart">Restart</button>
+  </div>
 
   <script>
     let distance = 0;
-    const maxDistance = 100;
+    const maxDistance = 1000;
     const status = document.getElementById("status");
     const astronaut = document.getElementById("astronaut");
+    const progressFill = document.getElementById("progressFill");
 
     function updateStatus() {
       if (distance >= maxDistance) {
-        status.textContent = "🌕 You've reached the Moon!";
+        status.textContent = "🌕 You've reached the Moon! Resetting...";
         astronaut.classList.add("bounce");
+        setTimeout(() => {
+          distance = 0;
+          updateStatus();
+        }, 1500);
       } else if (distance <= 0) {
         status.textContent = "🌍 You're on Earth.";
         astronaut.classList.add("bounce");
@@ -89,6 +142,7 @@
 
       const percent = (distance / maxDistance) * 100;
       astronaut.style.left = `${percent}%`;
+      progressFill.style.width = `${percent}%`;
     }
 
     document.getElementById("forward").onclick = () => {
@@ -113,3 +167,4 @@
     updateStatus();
   </script>
 </body>
+</html>
